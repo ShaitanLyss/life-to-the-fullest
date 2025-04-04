@@ -7,6 +7,11 @@ export class Interval {
     duration = $derived((this.end.getTime() - this.start.getTime()) / 1000);
 }
 export class Timer {
+    constructor({name = "Research", notify = true}: { name?: string, notify?: boolean } = {}) {
+        this.name = name;
+        this.autoNotif = notify;
+    }
+
     notify() {
         sendNotification({
             title: "Timer",
@@ -14,6 +19,7 @@ export class Timer {
         });
     }
     name = $state("Research");
+    autoNotif = $state(true);
     activeIntervals = $state<Interval[]>([]);
     activeInterval = $derived(this.activeIntervals.at(-1) ?? new Interval());
 
@@ -52,7 +58,7 @@ export class Timer {
         this.intervalHandle = setInterval(() => {
             this.lastEndDate.setTime(Date.now());
             const secs = Math.floor(this.duration);
-            if (secs !== this.notifSecs && secs % 600 === 0) {
+            if (this.autoNotif && secs !== this.notifSecs && secs % 600 === 0) {
                 this.notify();
                 this.notifSecs = secs;
             }
