@@ -1,7 +1,7 @@
 {
   "name": "life-to-the-fullest",
   "version": "0.1.0",
-  "description": "",
+  "description": "Life to the Fullest is a personal development app that helps you track your goals, habits, and progress.",
   "type": "module",
   "scripts": {
     "dev": "vite dev",
