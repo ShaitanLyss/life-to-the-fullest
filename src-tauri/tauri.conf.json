@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "life-to-the-fullest",
+  "productName": "Life to the Fullest",
   "version": "../package.json",
   "identifier": "com.life-to-the-fullest.app",
   "build": {

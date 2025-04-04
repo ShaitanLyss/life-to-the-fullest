@@ -15,7 +15,7 @@
 
 <main class="container w-screen h-screen grid content-center justify-center">
   
-  <TimerDisplay {timer} class="my-16" />
+  <TimerDisplay {timer} class="mb-16" />
   <div class="grid grid-cols-2 gap-4">
   <button type="button" class="btn btn-xl" onclick={() => {
     if (timer.running) {
