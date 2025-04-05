@@ -1,8 +1,15 @@
 <script lang="ts">
   import {Timer, TimerDisplay} from "$lib";
+  import { persisted } from "@selenite/commons";
   import { onMount } from "svelte";
   
-  const timer = new Timer({notify: true});
+
+  const timerName = persisted('timer-timerName', 'Research');
+  const timer = new Timer({notify: true, name: $timerName});
+
+  $effect(() => {
+    $timerName = timer.name;
+  });
   
   onMount(() => {
     timer.start();

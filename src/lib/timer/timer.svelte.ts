@@ -1,4 +1,5 @@
 import { sendNotification } from "@tauri-apps/plugin-notification";
+import { upperFirst } from "lodash-es";
 import { SvelteDate } from "svelte/reactivity";
 
 export class Interval {
@@ -14,8 +15,8 @@ export class Timer {
 
     notify() {
         sendNotification({
-            title: "Timer",
-            body: `You have been doing ${this.name.toLowerCase()} for ${this.hours} hours, ${this.minutes} minutes, and ${this.seconds} seconds.`,
+            title: upperFirst(this.name),
+            body: `You have been doing ${this.name.toLowerCase().replaceAll(new RegExp(/[!]/g), '').trim()} for ${this.hours} hours, ${this.minutes} minutes, and ${this.seconds} seconds.`,
         });
     }
     name = $state("Research");
