@@ -10,8 +10,7 @@ export function notify({sound, ...options}: NotifOptions) {
         new Audio(typeof sound === 'string' ? sound : 'cute_notification.mp3').play().catch((e) => {
             console.error("Failed to play sound", e);
         }
-    );
+    )}
     sendNotification(options);
-}
     
 }

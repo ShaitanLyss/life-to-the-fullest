@@ -16,7 +16,7 @@ export class Timer {
         this.onTick = onTick;
     }
 
-    notify(sound = false) {
+    notify(sound?: boolean) {
         notify({
             title: upperFirst(this.name),
             body: `You have been doing ${this.name.toLowerCase().replaceAll(new RegExp(/[!]/g), '').trim()} for ${this.hours} hours, ${this.minutes} minutes, and ${this.seconds} seconds.`,
