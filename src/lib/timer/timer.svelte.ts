@@ -76,6 +76,7 @@ export class Timer {
                 sendNotification({
                     title: upperFirst(this.name),
                     body: 'Time is up!',
+                    
                 })
             }
 

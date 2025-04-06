@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Timer } from "$lib";
   import PaddedNumber from "$lib/PaddedNumber.svelte";
-  import { active, sendNotification } from "@tauri-apps/plugin-notification";
+  import {  sendNotification,  } from "@tauri-apps/plugin-notification";
   import { persisted } from "svelte-persisted-store";
 
   class Time {
@@ -39,30 +39,22 @@
     }
   }
 
-  const timeInput = new Time();
-
-  const timer = new Timer({
-    notify: false,
-    name: "Countdown",
-  });
-
 
   class Countdown {
     timer = new Timer({
       notify: false,
       name: "Countdown",
       onTick: () => {
-        if (this.timer.duration + 1 >= this.goal.time) {
+        if (this.timer.duration >= this.goal.time) {
           this.stop();
           sendNotification({
-            title: "Countdown",
-            body: "Time's up!",
-            sound: "Alarm2",
-            silent: false,
+            title: this.name,
+            body: "Time's up!", 
           });
         }
       },
     });
+    name = $state("Countdown");
     goal: Time = new Time();
     active = $state(false);
 
@@ -94,19 +86,19 @@
         this.goal.hours = value;
     }
     get hours() {
-        return !this.active ? this.goal.hours : Math.floor((this.goal.time - this.timer.duration) / 3600);
+        return !this.active ? this.goal.hours : Math.floor((this.goal.time - this.timer.duration + 0.99) / 3600);
     }
     set mins(value: number) {
         this.goal.mins = value;
     }
     get mins() {
-        return !this.active ? this.goal.mins : Math.floor((this.goal.time - this.timer.duration) / 60) % 60;
+        return !this.active ? this.goal.mins : Math.floor((this.goal.time - this.timer.duration + 0.99 ) / 60) % 60;
     }
     set secs(value: number) {
         this.goal.secs = value;
     }
     get secs() {
-        return !this.active ? this.goal.secs : Math.floor((this.goal.time - this.timer.duration) % 60);
+        return !this.active ? this.goal.secs : Math.floor((this.goal.time - this.timer.duration + 0.99) % 60);
     }
     
     running = $derived(this.timer.running)
@@ -114,24 +106,35 @@
 
     const countdown = new Countdown();
     let  savedGoal = persisted('countdown-goal', 0);
+    let savedName = persisted('countdown-name', 'Terraform Tactics!');
     
     countdown.goal.time = $savedGoal;
 
     $effect(() => {
         $savedGoal = countdown.goal.time;
     })
+    
+    countdown.name = $savedName;
+    $effect(() => {
+        $savedName = countdown.name;
+    })
+
+    
 
 </script>
 
-<div class="flex text-9xl font-bold my-22">
+<div>
+<input type="text" class="input input-ghost -left-2.5" bind:value={countdown.name}>
+<div class="flex text-9xl font-bold my-12">
   <PaddedNumber bind:value={countdown.hours} editable={true} max={24} />
   :
   <PaddedNumber bind:value={countdown.mins} editable={true} />
   :
   <PaddedNumber bind:value={countdown.secs} editable={true} />
 </div>
+</div>
 
-<div class="gap-2">
+<div class="gap-2 mt-10">
 <button
   type="button"
   class="btn btn-xl btn-primary w-36"
