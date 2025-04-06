@@ -3,8 +3,6 @@ import { sendNotification, type Options } from "@tauri-apps/plugin-notification"
 interface NotifOptions extends Options {
     /** The sound url or boolean. */
     sound?: string | boolean;
-
-
 }
 
 export function notify({sound, ...options}: NotifOptions) {
