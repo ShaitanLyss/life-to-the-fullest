@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Timer } from "$lib";
+  import { notify } from "$lib/notification";
   import PaddedNumber from "$lib/PaddedNumber.svelte";
   import {  sendNotification,  } from "@tauri-apps/plugin-notification";
   import { persisted } from "svelte-persisted-store";
@@ -48,10 +49,12 @@
         if (this.timer.duration >= this.goal.time) {
           this.stop();
           
-          sendNotification({
+          notify({
             title: this.name,
             body: "Time's up!", 
+            sound: true,
           });
+          
         }
       },
     });

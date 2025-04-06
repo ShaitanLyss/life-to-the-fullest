@@ -1,4 +1,4 @@
-import { sendNotification } from "@tauri-apps/plugin-notification";
+import { notify } from "$lib/notification";
 import { upperFirst } from "lodash-es";
 import { SvelteDate } from "svelte/reactivity";
 
@@ -16,10 +16,11 @@ export class Timer {
         this.onTick = onTick;
     }
 
-    notify() {
-        sendNotification({
+    notify(sound = false) {
+        notify({
             title: upperFirst(this.name),
             body: `You have been doing ${this.name.toLowerCase().replaceAll(new RegExp(/[!]/g), '').trim()} for ${this.hours} hours, ${this.minutes} minutes, and ${this.seconds} seconds.`,
+            sound 
         });
     }
     name = $state("Research");
@@ -67,16 +68,16 @@ export class Timer {
             const secs = Math.floor(this.duration);
             this.onTick?.();
             if (this.autoNotif && secs !== this.notifSecs && secs % 600 === 0) {
-                this.notify();
+                this.notify(this.minutes % 30 === 0);
                 this.notifSecs = secs;
             }
             
             if (this.endDuration && this.duration >= this.endDuration) {
                 this.endDuration = undefined;
-                sendNotification({
+                notify({
                     title: upperFirst(this.name),
                     body: 'Time is up!',
-                    
+                    sound: true,
                 })
             }
 
