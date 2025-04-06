@@ -29,6 +29,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      svelte-persisted-store:
+        specifier: ^0.12.0
+        version: 0.12.0(svelte@5.25.6)
       tailwindcss:
         specifier: ^4.1.1
         version: 4.1.1
@@ -848,6 +851,12 @@ packages:
   svelte-floating-ui@1.6.2:
     resolution: {integrity: sha512-EC+DZtBey50P6l3NSzNQWon3cip8a1bzwdpmCdc45kymqEWL4BKhPemAq7SQ9QLebDPaMECW6YodxFbs2d+O/w==}
 
+  svelte-persisted-store@0.12.0:
+    resolution: {integrity: sha512-BdBQr2SGSJ+rDWH8/aEV5GthBJDapVP0GP3fuUCA7TjYG5ctcB+O9Mj9ZC0+Jo1oJMfZUd1y9H68NFRR5MyIJA==}
+    engines: {node: '>=0.14'}
+    peerDependencies:
+      svelte: ^3.48.0 || ^4 || ^5
+
   svelte-portal@2.2.1:
     resolution: {integrity: sha512-uF7is5sM4aq5iN7QF/67XLnTUvQCf2iiG/B1BHTqLwYVY1dsVmTeXZ/LeEyU6dLjApOQdbEG9lkqHzxiQtOLEQ==}
 
@@ -1559,6 +1568,10 @@ snapshots:
   svelte-floating-ui@1.6.2:
     dependencies:
       '@floating-ui/dom': 1.6.13
+
+  svelte-persisted-store@0.12.0(svelte@5.25.6):
+    dependencies:
+      svelte: 5.25.6
 
   svelte-portal@2.2.1: {}
 

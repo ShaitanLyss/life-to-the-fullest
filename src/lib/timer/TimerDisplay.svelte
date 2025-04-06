@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import type { Timer } from "./timer.svelte";
+  import PaddedNumber from "$lib/PaddedNumber.svelte";
 
     interface Props extends HTMLAttributes<HTMLElement> {
         timer: Timer;
@@ -13,8 +14,14 @@
 
 <article {...props} class="grid {props.class}">
 <input type="text" class="input input-ghost" bind:value={timer.name}>
-<button type="button" class="{size} font-bold select-none cursor-pointer" ondblclick={(e) => {
+<button type="button" class="{size} flex items-center font-bold select-none cursor-pointer" ondblclick={(e) => {
   e.preventDefault();
   timer.notify();
-}}>{String(timer.hours).padStart(2, "0")}:{String(timer.minutes).padStart(2, "0")}:{String(timer.seconds).padStart(2, "0")}</button>
+}}>
+<PaddedNumber bind:value={timer.hours} />
+:
+<PaddedNumber bind:value={timer.minutes} />
+:
+<PaddedNumber bind:value={timer.seconds} />
+</button>
 </article>

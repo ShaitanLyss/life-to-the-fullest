@@ -9,11 +9,14 @@
     <ul class="menu menu-horizontal gap-1 p-4 bg-base-300 rounded-box -translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
       {#snippet Link(href: string, label: string)}
       <li>
-        <a {href} class={page.url.pathname === href && "bg-primary  text-primary-content"}>{label}</a>
+        <a {href} class=" {page.url.pathname === href && 'bg-primary  text-primary-content'}">{label}</a>
         </li>
       {/snippet}
       {@render Link("/", "Timer")}
       {@render Link("/mega-timer", "Duo")}
+      {@render Link("/pomodoro", "Pomodoro")}
+      {@render Link("/countdown", "Countdown")}
+      
       
     </ul> 
   </header>

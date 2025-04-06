@@ -8,9 +8,12 @@ export class Interval {
     duration = $derived((this.end.getTime() - this.start.getTime()) / 1000);
 }
 export class Timer {
-    constructor({name = "Research", notify = true}: { name?: string, notify?: boolean } = {}) {
+    onTick: (() => void) | undefined;
+    constructor({name = "Research", notify = true, endDuration, onTick}: { name?: string, notify?: boolean, endDuration?: number, onTick?: () => void } = {}) {
         this.name = name;
         this.autoNotif = notify;
+        this.endDuration = endDuration;
+        this.onTick = onTick;
     }
 
     notify() {
@@ -23,6 +26,8 @@ export class Timer {
     autoNotif = $state(true);
     activeIntervals = $state<Interval[]>([]);
     activeInterval = $derived(this.activeIntervals.at(-1) ?? new Interval());
+
+    endDuration = $state<number>();
 
 
     pastDuration = $derived.by(() => {
@@ -39,6 +44,7 @@ export class Timer {
     duration = $derived(this.pastDuration + this.activeInterval.duration);
 
     hours = $derived(Math.floor(this.duration / 3600));
+    
     minutes = $derived(Math.floor((this.duration % 3600) / 60));
     seconds = $derived(Math.floor(this.duration % 60));
     lastStartDate = $derived(this.activeIntervals.at(-1)?.start ?? new SvelteDate());
@@ -59,12 +65,21 @@ export class Timer {
         this.intervalHandle = setInterval(() => {
             this.lastEndDate.setTime(Date.now());
             const secs = Math.floor(this.duration);
+            this.onTick?.();
             if (this.autoNotif && secs !== this.notifSecs && secs % 600 === 0) {
                 this.notify();
                 this.notifSecs = secs;
             }
+            
+            if (this.endDuration && this.duration >= this.endDuration) {
+                this.endDuration = undefined;
+                sendNotification({
+                    title: upperFirst(this.name),
+                    body: 'Time is up!',
+                })
+            }
 
-        }, 500)
+        }, 20)
     }
 
     stop() {
