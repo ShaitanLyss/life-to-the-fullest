@@ -47,6 +47,7 @@
       onTick: () => {
         if (this.timer.duration >= this.goal.time) {
           this.stop();
+          
           sendNotification({
             title: this.name,
             body: "Time's up!", 
