@@ -14,8 +14,8 @@
       {/snippet}
       {@render Link("/", "Timer")}
       {@render Link("/double-timer", "Duo")}
-      {@render Link("/pomodoro", "Pomodoro")}
       {@render Link("/countdown", "Countdown")}
+      {@render Link("/pomodoro", "Pomodoro")}
       
       
     </ul> 
