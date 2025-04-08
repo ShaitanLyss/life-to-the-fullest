@@ -1,2 +1,2 @@
 export * from "./countdown.svelte";
-export {default as CountdownComponent} from "./Countdown.svelte";
+export {default as CountdownComponent} from "./CountdownComponent.svelte";

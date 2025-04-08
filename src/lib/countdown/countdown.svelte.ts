@@ -57,13 +57,13 @@ export class Countdown {
         onTick: () => {
             if (this.timer.duration >= this.goal.time) {
                 this.stop();
-                this.onEnd?.();
-
+                
                 notify({
                     title: this.name,
                     body: "Time's up!",
                     sound: true,
                 });
+                this.onEnd?.();
 
             }
         },
