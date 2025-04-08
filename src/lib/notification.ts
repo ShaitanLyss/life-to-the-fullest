@@ -1,3 +1,4 @@
+import { isTauri } from "@tauri-apps/api/core";
 import { sendNotification, type Options } from "@tauri-apps/plugin-notification";
 
 interface NotifOptions extends Options {
@@ -11,6 +12,8 @@ export function notify({sound, ...options}: NotifOptions) {
             console.error("Failed to play sound", e);
         }
     )}
+    if (isTauri())  {
     sendNotification(options);
+    }
     
 }

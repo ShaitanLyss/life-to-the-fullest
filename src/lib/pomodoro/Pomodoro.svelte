@@ -67,7 +67,7 @@
         {@render input({ label: "Pause courte", field: "shortBreakMins" })}
         {@render input({ label: "Pause longue", field: "longBreakMins" })}
     </fieldset>
-    <section class="w-xl p-4 justify-center grid">
+    <section class="w-md p-4 justify-center grid">
         <h1 class="font-bold text-2xl">
             Pomodoro n°{pomodoro.pomodoroNumber}
         </h1>
