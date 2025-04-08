@@ -63,6 +63,7 @@
 
         timeout = setTimeout(() => {
           interval = setInterval(() => {
+            increment ? increment(incr) :
             applyIncr(incr);
           }, 2000 / max);
         }, 200);

@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CountdownComponent } from "$lib/countdown";
+  import type { HTMLInputAttributes, HTMLInputTypeAttribute } from "svelte/elements";
     import type { Pomodoro } from "./pomodoro.svelte";
 
     interface Props {
@@ -19,16 +20,18 @@
             label,
             field,
             suffix = "mins",
+            type = "number",
+            ...props
         }: {
             label: string;
             field: keyof Pomodoro;
             suffix?: string;
-        })}
+        } & HTMLInputAttributes)}
             <span class="fieldset-label">{label}</span>
             <div class="input">
                 <input
-                    type="number"
-                    class=""
+                    {type}
+                    {...props}
                     bind:value={pomodoro[field]}
                     min="0"
                 />
@@ -38,6 +41,7 @@
             </div>
         {/snippet}
 
+        {@render input({ label: "Nom de l'activité", field: "activityName", suffix:"", type: "text", placeholder: "Nom de l'activité"})}
         {@render input({ label: "Pomodoros", field: "numPomodoros", suffix: "" })}
         {@render input({ label: "Durée", field: "activityMins" })}
         {@render input({ label: "Pause courte", field: "shortBreakMins" })}
@@ -45,7 +49,8 @@
     </fieldset>
     <section class="w-md p-4 justify-center grid">
         <h1 class="font-bold text-2xl">
-            Pomodoro n°{pomodoro.pomodoroNumber}
+            {pomodoro.info.name}
+            <!-- Pomodoro n°{pomodoro.pomodoroNumber} -->
         </h1>
         <CountdownComponent
             countdown={pomodoro.countdown}

@@ -9,26 +9,14 @@ export class Pomodoro {
     isOnBreak = $state(false);
     isEndOfCycle = $derived(this.pomodoroNumber % this.numPomodoros == 0);
 
-    #activityName = $state("Recherche");
+    activityName = $state("Recherche");
 
-    get activityName() {
-        if (this.isOnBreak) {
-            return this.#activityName;
-        }
-        return this.countdown.name;
-    }
-
-    set activityName(value: string) {
-        this.#activityName = value;
-        if (!this.isOnBreak)
-            this.countdown.name = value;
-    }
     shortBreakName = $state("Pause Courte");
     longBreakName = $state("Pause Longue");
 
     info: { name: string, mins: number } = $derived(
         !this.isOnBreak ? {
-            name: this.#activityName,
+            name: this.activityName,
             mins: this.activityMins,
         } : this.isEndOfCycle ? {
             name: this.longBreakName,
@@ -41,7 +29,7 @@ export class Pomodoro {
 
     countdown = $derived(
         new Countdown({
-            ...this.info, active: true, onEnd: () => {
+            mins: this.info.mins, name: `Pomodoro n°${this.pomodoroNumber}`, active: true, onEnd: () => {
                 if (this.isOnBreak) {
                     this.pomodoroNumber++;
                 }

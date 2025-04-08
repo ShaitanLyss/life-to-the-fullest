@@ -13,7 +13,7 @@
 </script>
 
 <div>
-<input type="text" class="input input-ghost -left-2.5" bind:value={countdown.name}>
+<input type="text" class="input input-ghost -left-2.5" bind:value={countdown.name} readonly={!editable}>
 <div class="flex text-9xl font-bold my-12">{#if hours}
   <PaddedNumber value={countdown.hours} {editable} max={24} increment={(incr) => countdown.goal.hours += incr} />
   :

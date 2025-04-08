@@ -14,7 +14,7 @@ export class Time {
     }
 
     set secs(value: number) {
-        this.time = this.time - this.#secs + value;
+        this.time = Math.max(0, this.time - this.#secs + value);
     }
 
     #mins = $derived(Math.floor(this.time / 60) % 60)
@@ -22,7 +22,7 @@ export class Time {
         return this.#mins;
     }
     set mins(value: number) {
-        this.time = this.time - this.#mins * 60 + value * 60;
+        this.time = Math.max(0, this.time - this.#mins * 60 + value * 60);
     }
 
     #hours = $derived(Math.floor(this.time / 3600))
@@ -30,7 +30,7 @@ export class Time {
         return this.#hours;
     }
     set hours(value: number) {
-        this.time = this.time - this.#hours * 3600 + value * 3600;
+        this.time = Math.max(0, this.time - this.#hours * 3600 + value * 3600);
     }
 
     clear() {
@@ -61,7 +61,8 @@ export class Countdown {
                 this.stop();
 
                 if (isTauri()) {
-                    getCurrentWindow().setFocus();
+                    const window = getCurrentWindow();
+                    window.setFocus()
                 }
                 
                 notify({
