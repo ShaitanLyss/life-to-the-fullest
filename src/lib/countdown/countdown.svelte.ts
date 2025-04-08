@@ -1,5 +1,7 @@
 import { notify } from "$lib/notification";
 import { Timer } from "$lib/timer";
+import { isTauri } from "@tauri-apps/api/core";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 
 export class Time {
     /** The time in seconds. */
@@ -57,6 +59,10 @@ export class Countdown {
         onTick: () => {
             if (this.timer.duration >= this.goal.time) {
                 this.stop();
+
+                if (isTauri()) {
+                    getCurrentWindow().show();
+                }
                 
                 notify({
                     title: this.name,
