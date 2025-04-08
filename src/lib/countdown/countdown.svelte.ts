@@ -61,7 +61,7 @@ export class Countdown {
                 this.stop();
 
                 if (isTauri()) {
-                    getCurrentWindow().show();
+                    getCurrentWindow().setFocus();
                 }
                 
                 notify({
