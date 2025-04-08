@@ -7,6 +7,7 @@
     max?: number;
     length?: number;
     editable?: boolean;
+    increment?: (value: number) => void;
   }
 
   let {
@@ -14,24 +15,25 @@
     length = 2,
     max = 60,
     editable = false,
+    increment,
     ...props
   }: Props = $props();
 
-      function applyIncr(incr = 1) {
-        value = (max + value + incr) % max;
-    }
+  function applyIncr(incr = 1) {
+    value = (max + value + incr) % max;
+  }
 
-    let timeout: number | undefined;
-    let interval: number | undefined;
+  let timeout: number | undefined;
+  let interval: number | undefined;
 
-    function cleanUp() {
-        clearTimeout(timeout);
-        clearInterval(interval);
-    }
+  function cleanUp() {
+    clearTimeout(timeout);
+    clearInterval(interval);
+  }
 
-    onDestroy(() => {
-        cleanUp();
-    });
+  onDestroy(() => {
+    cleanUp();
+  });
 </script>
 
 {#snippet btn({
@@ -50,20 +52,21 @@
       onpointerdown={() => {
         cleanUp();
 
-        window.addEventListener("pointerup", () => {
+        window.addEventListener(
+          "pointerup",
+          () => {
             cleanUp();
-        }, { once: true });
-        applyIncr(incr);
+          },
+          { once: true },
+        );
+        increment ? increment(incr) : applyIncr(incr);
 
         timeout = setTimeout(() => {
-            interval = setInterval(() => {
-                applyIncr(incr);
-            }, 2000 / max);
+          interval = setInterval(() => {
+            applyIncr(incr);
+          }, 2000 / max);
         }, 200);
-
       }}
-
-      
       >{content}
     </button>
   {/if}

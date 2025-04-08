@@ -15,12 +15,12 @@
 <div>
 <input type="text" class="input input-ghost -left-2.5" bind:value={countdown.name}>
 <div class="flex text-9xl font-bold my-12">{#if hours}
-  <PaddedNumber bind:value={countdown.hours} {editable} max={24} />
+  <PaddedNumber value={countdown.hours} {editable} max={24} increment={(incr) => countdown.goal.hours += incr} />
   :
   {/if}
-  <PaddedNumber bind:value={countdown.mins} {editable} />
+  <PaddedNumber value={countdown.mins} {editable} increment={(incr) => countdown.goal.mins += incr} />
   :
-  <PaddedNumber bind:value={countdown.secs} {editable} />
+  <PaddedNumber value={countdown.secs} {editable} increment={(incr) => countdown.goal.secs += incr} />
 </div>
 </div>
 
