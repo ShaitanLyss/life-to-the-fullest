@@ -4,9 +4,10 @@
 export const prerender = true;
 export const ssr = false;
 
+import { isTauri } from "@tauri-apps/api/core";
 import { Window } from "@tauri-apps/api/window";
 
-if (typeof window !== "undefined") {
+if (typeof window !== "undefined" && isTauri()) {
 Window.getAll().then((windows) => {
     for (const window of windows) {
         window.show();
