@@ -1,45 +1,12 @@
 <script lang="ts">
-    import { CountdownComponent, Countdown } from "$lib/countdown";
-    import { onDestroy } from "svelte";
+    import { CountdownComponent } from "$lib/countdown";
+    import type { Pomodoro } from "./pomodoro.svelte";
 
-    class Pomodoro {
-        shortBreakMins = $state(5);
-        longBreakMins = $state(15);
-        activityMins = $state(25);
-        numPomodoros = $state(4);
-        pomodoroNumber = $state(1);
-        isOnBreak = $state(false);
-        isEndOfCycle = $derived(this.pomodoroNumber % this.numPomodoros == 0);
-
-        info: {name: string, mins: number} = $derived(
-            !this.isOnBreak ? {
-                name: "Pomodoro",
-                mins: this.activityMins,
-            } : this.isEndOfCycle ? {
-                name: "Pause Longue",
-                mins: this.longBreakMins,
-            } : {
-                name: "Pause Courte",
-                mins: this.shortBreakMins,
-            }
-        )
-
-        countdown = $derived(
-            new Countdown({...this.info, active: true, onEnd: () => {
-                if (this.isOnBreak) {
-                    this.pomodoroNumber++;
-                }
-                this.isOnBreak = !this.isOnBreak;
-            }}),
-        );
-
+    interface Props {
+        pomodoro: Pomodoro;
     }
     
-    const pomodoro = new Pomodoro();
-
-    onDestroy(() => {
-        pomodoro.countdown.stop();
-    })
+    let {pomodoro}: Props = $props();
 </script>
 
 <section class="flex">
@@ -57,7 +24,7 @@
             field: keyof Pomodoro;
             suffix?: string;
         })}
-            <label class="fieldset-label">{label}</label>
+            <span class="fieldset-label">{label}</span>
             <div class="input">
                 <input
                     type="number"
