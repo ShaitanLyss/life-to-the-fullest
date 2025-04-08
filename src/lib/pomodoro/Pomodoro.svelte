@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CountdownComponent, Countdown } from "$lib/countdown";
+    import { onDestroy } from "svelte";
 
     class Pomodoro {
         shortBreakMins = $state(5);
@@ -35,6 +36,10 @@
     }
     
     const pomodoro = new Pomodoro();
+
+    onDestroy(() => {
+        pomodoro.countdown.stop();
+    })
 </script>
 
 <section class="flex">
