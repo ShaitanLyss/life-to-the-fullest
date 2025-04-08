@@ -51,9 +51,11 @@
         {#snippet input({
             label,
             field,
+            suffix = "mins",
         }: {
             label: string;
             field: keyof Pomodoro;
+            suffix?: string;
         })}
             <label class="fieldset-label">{label}</label>
             <div class="input">
@@ -63,11 +65,13 @@
                     bind:value={pomodoro[field]}
                     min="0"
                 />
+                {#if suffix}
                 <p class="label">mins</p>
+                {/if}
             </div>
         {/snippet}
 
-        {@render input({ label: "Pomodoros", field: "numPomodoros" })}
+        {@render input({ label: "Pomodoros", field: "numPomodoros", suffix: "" })}
         {@render input({ label: "Durée", field: "activityMins" })}
         {@render input({ label: "Pause courte", field: "shortBreakMins" })}
         {@render input({ label: "Pause longue", field: "longBreakMins" })}
