@@ -41,7 +41,7 @@
     <fieldset
         class="fieldset w-3xs bg-base-200 border border-base-300 p-4 rounded-box"
     >
-        <legend class="fieldset-legend">Pomodoro</legend>
+        <legend class="fieldset-legend">Configuration</legend>
 
         {#snippet input({
             label,
