@@ -13,7 +13,7 @@
         </li>
       {/snippet}
       {@render Link("/", "Timer")}
-      {@render Link("/mega-timer", "Duo")}
+      {@render Link("/double-timer", "Duo")}
       {@render Link("/pomodoro", "Pomodoro")}
       {@render Link("/countdown", "Countdown")}
       

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { Countdown, CountdownComponent } from "$lib";
-  import PaddedNumber from "$lib/PaddedNumber.svelte";
   import { persisted } from "svelte-persisted-store";
 
  

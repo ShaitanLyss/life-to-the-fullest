@@ -2,6 +2,7 @@
   import { Timer } from "$lib";
   import Selector from "$lib/Selector.svelte";
   import TimerDisplay from "$lib/timer/TimerDisplay.svelte";
+    import { onDestroy } from "svelte";
 
   const timerA = new Timer();
     const timerB = new Timer({"name": "Break"});
@@ -10,6 +11,11 @@
 
     timerA.start();
 
+    onDestroy(() => {
+        for (const timer of timers) {
+            timer.stop();
+        }
+    });
 </script>
 
 
