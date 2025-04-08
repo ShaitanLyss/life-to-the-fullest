@@ -24,7 +24,7 @@
   
   <TimerDisplay {timer} class="mb-16" />
   <div class="grid grid-cols-2 gap-4">
-  <button type="button" class="btn btn-xl" onclick={() => {
+  <button type="button" class="btn btn-xl btn-primary" onclick={() => {
     if (timer.running) {
       timer.stop();
     } else {
@@ -32,7 +32,7 @@
     }
   }
   }>{timer.running ? 'Pause' : 'Resume'}</button>
-  <button type="button" class="btn btn-xl" onclick={() => {
+  <button type="button" class="btn btn-xl btn-secondary" onclick={() => {
     timer.reset();
   }}>Reset</button>
   </div>
