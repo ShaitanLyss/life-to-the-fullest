@@ -62,6 +62,7 @@ export class Countdown {
 
                 if (isTauri()) {
                     const window = getCurrentWindow();
+                    window.unminimize();
                     window.setFocus()
                 }
                 
