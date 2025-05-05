@@ -1,7 +1,8 @@
 <script lang="ts">
-    import { CountdownComponent } from "$lib/countdown";
+    import { CountdownComponent, Time } from "$lib/countdown";
   import type { HTMLInputAttributes, HTMLInputTypeAttribute } from "svelte/elements";
     import type { Pomodoro } from "./pomodoro.svelte";
+    import TimerDisplay from "$lib/timer/TimerDisplay.svelte";
 
     interface Props {
         pomodoro: Pomodoro;
@@ -48,15 +49,17 @@
         {@render input({ label: "Pause longue", field: "longBreakMins" })}
     </fieldset>
     <section class="w-md p-4 justify-center grid">
-        <h1 class="font-bold text-2xl">
+        <h1 class="font-bold text-2xl flex justify-between items-center">
             {pomodoro.info.name}
             <!-- Pomodoro n°{pomodoro.pomodoroNumber} -->
+            <TimerDisplay timer={pomodoro.timer} size="text-2xl" font="font-normal" name={false} />
         </h1>
         <CountdownComponent
             countdown={pomodoro.countdown}
             editable={false}
             hours={false}
             clear={false}
+            buttons={true}
         />
     </section>
 </section>

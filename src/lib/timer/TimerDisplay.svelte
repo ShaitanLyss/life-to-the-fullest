@@ -6,15 +6,18 @@
     interface Props extends HTMLAttributes<HTMLElement> {
         timer: Timer;
         size?: string;
-        
+        name?: boolean;
+        font?: string;
     }
     
-    let {timer, size = "text-9xl", ...props}: Props = $props();
+    let {timer, size = "text-9xl", font = "font-bold", name = true, ...props}: Props = $props();
 </script>
 
 <article {...props} class="grid {props.class}">
+  {#if name}
 <input type="text" class="input input-ghost" bind:value={timer.name}>
-<button type="button" class="{size} flex items-center font-bold select-none cursor-pointer" ondblclick={(e) => {
+{/if}
+<button type="button" class="{size} flex items-center {font} select-none cursor-pointer" ondblclick={(e) => {
   e.preventDefault();
   timer.notify();
 }}>

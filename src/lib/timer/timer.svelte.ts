@@ -1,5 +1,6 @@
 import { notify } from "$lib/notification";
 import { upperFirst } from "lodash-es";
+import { onDestroy } from "svelte";
 import { SvelteDate } from "svelte/reactivity";
 
 export class Interval {
@@ -9,11 +10,19 @@ export class Interval {
 }
 export class Timer {
     onTick: (() => void) | undefined;
-    constructor({name = "Research", notify = true, endDuration, onTick}: { name?: string, notify?: boolean, endDuration?: number, onTick?: () => void } = {}) {
+    constructor({name = "Research", notify = true, endDuration, onTick, active = false}: { name?: string, notify?: boolean, endDuration?: number, onTick?: () => void, active?: boolean } = {}) {
         this.name = name;
         this.autoNotif = notify;
         this.endDuration = endDuration;
         this.onTick = onTick;
+
+        if (active) {
+            this.start();
+        }
+
+        onDestroy(() => {
+            this.stop();
+        })
     }
 
     notify(sound?: boolean) {
@@ -62,6 +71,7 @@ export class Timer {
         this.activeIntervals.push(new Interval());
     }
     start() {
+        this.stop();
         this.addInterval();
         this.intervalHandle = setInterval(() => {
             this.lastEndDate.setTime(Date.now());

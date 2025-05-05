@@ -16,7 +16,7 @@
       {@render Link("/double-timer", "Duo")}
       {@render Link("/countdown", "Countdown")}
       {@render Link("/pomodoro", "Pomodoro")}
-      
+      {@render Link("/trip-preparation", "Trip Prep")}
       
     </ul> 
   </header>

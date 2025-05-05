@@ -1,4 +1,6 @@
 import { Countdown } from "$lib/countdown";
+import { Timer } from "$lib/timer";
+import { onDestroy, untrack } from "svelte";
 
 export class Pomodoro {
     shortBreakMins = $state(5);
@@ -27,15 +29,62 @@ export class Pomodoro {
         }
     )
 
-    countdown = $derived(
-        new Countdown({
+    #countdown = $state.raw(this.createCountdown());
+
+    readonly timer = new Timer({
+        name: "Total time",
+    })
+
+    get countdown() {
+        return this.#countdown;
+    }
+    constructor() {
+        $effect(() => {
+            this.updateCountdown();
+        })
+
+        $effect(() => {
+            const running = this.countdown.running;
+            untrack(() => {
+                if (running) {
+                    this.timer.start();
+                } else {
+                    this.timer.stop();
+                }
+            })
+        })
+
+        onDestroy(() => {
+            this.destroy();
+        })
+    }
+
+    destroy() {
+        this.countdown.stop();
+        this.timer.stop();
+    }
+
+    private createCountdown() {
+        return new Countdown({
             mins: this.info.mins, name: `Pomodoro n°${this.pomodoroNumber}`, active: true, onEnd: () => {
                 if (this.isOnBreak) {
                     this.pomodoroNumber++;
                 }
                 this.isOnBreak = !this.isOnBreak;
             }
-        }),
-    );
+        })
+    }
+
+    private updateCountdown() {
+        untrack(() => {
+            if (this.countdown) {
+                this.countdown.stop();
+            }
+        })
+        const countdown = this.createCountdown();
+        untrack(() => {
+            this.#countdown = countdown;
+        })
+    }
 
 }

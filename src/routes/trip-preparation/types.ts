@@ -1,0 +1,1 @@
+export type Task = string | { name: string, subtasks: Task[] } | [string, string[]] | false;
