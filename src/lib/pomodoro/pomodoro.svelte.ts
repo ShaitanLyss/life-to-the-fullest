@@ -33,6 +33,7 @@ export class Pomodoro {
 
     readonly timer = new Timer({
         name: "Total time",
+        notify: false,
     })
 
     get countdown() {
