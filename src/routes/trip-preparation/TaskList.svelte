@@ -29,7 +29,7 @@
                 ? { name: task[0], subtasks: task[1] }
                 : task}
             {@render Task(name)}
-            <TaskList tasks={subtasks} class="ms-8" />
+            <TaskList tasks={subtasks} class="ms-12" />
         {/if}
     {/each}
 </div>
