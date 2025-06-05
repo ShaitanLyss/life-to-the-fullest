@@ -91,7 +91,7 @@
   class="p-8 rounded-box h-[80vh] overflow-clip min-w-[33vw] flex flex-col items-start justify-start self-stretch justify-self-stretch"
 >
   <h1 class="text-4xl font-bold mb-8">Préparatifs de Voyage</h1>
-  <fieldset class="fieldset mb-4 w-2/3">
+  <fieldset class="fieldset mb-4 w-full">
     <legend class="fieldset-legend">Caractéristiques</legend>
     <label class="input w-full">
       <input
